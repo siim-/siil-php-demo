@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Demo of Siil</title>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="twelve columns" style="text-align:center">
+					<h1>Siil demo</h1>
+				</div>
+			</div>
+			{{#if authed}}
+				<div class="row">
+					<div class="three columns">
+					&nbsp;
+					</div>
+					<div class="six columns" style="text-align:center">
+						<h2>Hey there, {{first_name}}<h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="three columns">
+					&nbsp;
+					</div>
+					<div class="six columns" style="text-align:center">
+						<b>Full name: {{first_name}} {{last_name}}</b>
+					</div>
+				</div>
+				<div class="row">
+					<div class="three columns">
+					&nbsp;
+					</div>
+					<div class="six columns" style="text-align:center">
+						<b>ID code: {{code}}</b>
+					</div>
+				</div>
+				<div class="row">
+					<div class="three columns">
+					&nbsp;
+					</div>
+					<div class="six columns" style="text-align:center">
+						<b>Session expires in {{expiry}}</b>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="three columns">
+					&nbsp;
+					</div>
+					<div class="six columns">
+						<button id="js-demo" class="button u-full-width" style="height:60px;line-height:60px;font-size:1.1em">Try /me query</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="three columns">
+					&nbsp;
+					</div>
+					<div class="six columns">
+						<form action="{{siil_url}}/signout/{{token}}" method="POST">
+							<button type="submit" class="button button-primary u-full-width" style="height:60px;line-height:60px;font-size:1.1em">Sign out</button>
+						</form>
+					</div>
+				</div>
+			{{else}}
+				<div class="row">
+					<div class="three columns">
+					&nbsp;
+					</div>
+					<div class="six columns">
+						<a href="{{siil_url}}/signin/{{site_id}}" class="button button-primary u-full-width" style="height:60px;line-height:60px;font-size:1.1em">Sign in with Siil</a>
+					</div>
+				</div>
+			{{/if}}
+		</div>
+	</body>
+	{{#if authed}}
+	<script type="text/javascript">
+		window.onload = function() {
+			document.getElementById("js-demo").addEventListener("click", function() {
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '{{siil_url}}/api/me?client_id={{site_id}}');
+				xhr.withCredentials = true;
+				xhr.send(null);
+				xhr.onreadystatechange = function () {
+				  var DONE = 4; // readyState 4 means the request is done.
+				  var OK = 200; // status 200 is a successful return.
+				  if (xhr.readyState === DONE) {
+				    if (xhr.status === OK) {
+				      resp = JSON.parse(xhr.responseText);
+				      alert("Hello from JS "+resp.first_name+" "+resp.last_name+" ("+resp.code+")");
+				    } else {
+				      console.log('Error: ' + xhr.status); // An error occurred during the request.
+				    }
+				  }
+				};
+			}, false);
+		}
+	</script>
+	{{/if}}
+</html>

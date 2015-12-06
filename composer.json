@@ -1,0 +1,14 @@
+{
+    "name": "siim-/siil-php-demo",
+    "description": "PHP language demo for Siil authentication provider",
+    "authors": [
+        {
+            "name": "Siim Kaspar Uustalu",
+            "email": "siim.kaspar@uustalu.me"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^2.1",
+        "xamin/handlebars.php": "dev-master"
+    }
+}
