@@ -1,5 +1,5 @@
 <?php
-include 'vendor/autoload.php';
+include dirname(__DIR__).'/vendor/autoload.php';
 
 function makeAPIRequest($token) 
 {
@@ -99,14 +99,14 @@ function handleDefault($hb)
 }
 
 //Load environment configuration
-$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv = new Dotenv\Dotenv(dirname(__DIR__));
 $dotenv->load();
 
 //Handlebars template renderer
 $hb = new Handlebars\Handlebars(array(
-    'loader' => new \Handlebars\Loader\FilesystemLoader(__DIR__.'/tmpl/'),
+    'loader' => new \Handlebars\Loader\FilesystemLoader(dirname(__DIR__).'/tmpl/'),
     'partials_loader' => new \Handlebars\Loader\FilesystemLoader(
-        __DIR__ . '/tmpl/',
+        dirname(__DIR__) . '/tmpl/',
         array(
             'prefix' => '_'
         )
