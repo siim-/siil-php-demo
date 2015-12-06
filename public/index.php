@@ -28,7 +28,7 @@ function verify($tokenInfo)
 {
     $verification = $tokenInfo['verification'];
     unset($tokenInfo['verification']);
-    return $verification == base64_encode(hash_hmac('sha512', json_encode($tokenInfo), $_ENV['SIIL_SITE_PRIVATE'], true));
+    return $verification == base64_encode(hash_hmac('sha512', json_encode($tokenInfo, JSON_UNESCAPED_UNICODE), $_ENV['SIIL_SITE_PRIVATE'], true));
 }
 
 function handleSuccessAction() 
